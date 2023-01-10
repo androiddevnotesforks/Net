@@ -9,7 +9,6 @@ import com.drake.net.exception.RequestParamsException
 import com.drake.net.exception.ResponseException
 import com.drake.net.exception.ServerResponseException
 import com.drake.net.request.kType
-import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 import okhttp3.Response
@@ -49,7 +48,7 @@ class SerializationConverter(
                             val errorMessage = json.optString(message, NetConfig.app.getString(com.drake.net.R.string.no_error_message))
                             throw ResponseException(response, errorMessage, tag = srvCode) // 将业务错误码作为tag传递
                         }
-                    } catch (e: SerializationException) { // 固定格式JSON分析失败直接解析JSON
+                    } catch (e: java.lang.Exception) { // 固定格式JSON分析失败直接解析JSON
                         bodyString.parseBody<R>(kType)
                     }
                 }
